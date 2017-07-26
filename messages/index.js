@@ -43,12 +43,14 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     
     // If intent is 'light-op', then ...
     if (args.intent === 'light-op' && Number(args.score) > 0.8) {
-        session.send(prettyjson.render(args, prettyjson_options));
+        //session.send(prettyjson.render(args, prettyjson_options));
+        //session.send(JSON.stringify(args.intents));
+
         // get entity of luminary type
-        if (args.intents && args.intents.entities) {
+        if (args.entities) {
             var luminary = '';
             var action = '';
-            for (var en in args.intents.entities) {
+            for (var en in args.entities) {
                 if (en.type === 'luminary')
                     luminary = en.entity;
                 if (en.type === 'action')
