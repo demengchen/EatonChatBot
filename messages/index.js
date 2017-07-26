@@ -40,8 +40,24 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 */
 .matches('light-op', (session, args) => {
     session.send(JSON.stringify(args));
-    session.send(prettyjson.render(args, prettyjson_options));
-    //if (args.intent)
+    
+    // If intent is 'light-op', then ...
+    if (args.intent === 'light-op' && Number(args.score) > 0.8) {
+        session.send(prettyjson.render(args, prettyjson_options));
+        // get entity of luminary type
+        if (args.intents && args.intents.entities) {
+            var luminary = '';
+            var action = '';
+            for (var en in args.intents.entities) {
+                if (en.type === 'luminary')
+                    luminary = en.entity;
+                if (en.type === 'action')
+                    action = en.entity;
+            }
+            session.send("luminary: %s", luminary);
+            session.send("action: %s", action);
+        }
+    }
 })
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
