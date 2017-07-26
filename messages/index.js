@@ -8,6 +8,10 @@ https://aka.ms/abs-node-luis
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
+const prettyjson = require('prettyjson');
+const prettyjson_options = {
+  noColor: true
+};
 
 var useEmulator = (process.env.NODE_ENV == 'development');
 
@@ -34,6 +38,9 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 /*
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
+.matches('light-op', (session, args) => {
+    session.send(prettyjson.render(args, prettyjson_options));
+})
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
 });
