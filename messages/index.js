@@ -39,7 +39,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
 .matches('light-op', (session, args) => {
-    session.send(JSON.stringify(args));
+    //session.send(JSON.stringify(args));
     
     // If intent is 'light-op', then ...
     if (args.intent === 'light-op' && Number(args.score) > 0.8) {
@@ -51,9 +51,10 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             var luminary = '';
             var action = '';
             for (var en in args.entities) {
+                session.send(JSON.stringify(en));
                 if (en.type === 'luminary')
                     luminary = en.entity;
-                if (en.type === 'action')
+                else if (en.type === 'action')
                     action = en.entity;
             }
             session.send("luminary: %s", luminary);
