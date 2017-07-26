@@ -39,6 +39,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
 .matches('light-op', (session, args) => {
+    session.send(session.message.text);
     session.send(JSON.stringify(args));
     
     // If intent is 'light-op', then ...
