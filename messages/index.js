@@ -39,7 +39,9 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
 .matches('light-op', (session, args) => {
+    session.send(JSON.stringify(args));
     session.send(prettyjson.render(args, prettyjson_options));
+    //if (args.intent)
 })
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
