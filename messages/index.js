@@ -62,6 +62,8 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             }
             session.send("luminary: %s", luminary);
             session.send("action: %s", action);
+
+            session.send("Hello world.");
         }
     }
 })
