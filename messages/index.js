@@ -41,8 +41,8 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
 .matches('light-op', (session, args) => {
-    session.send(session.message.text);
-    session.send(JSON.stringify(args));
+    //session.send(session.message.text);
+    //session.send(JSON.stringify(args));
     
     // If intent is 'light-op', then ...
     if (args.intent === 'light-op' && Number(args.score) > 0.8) {
@@ -65,28 +65,29 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             session.send("luminary: %s", luminary);
             session.send("action: %s", action);
 
-            session.send("Call HTTP function to send device command to turn light " + luminary + " " + action);
+            session.send("Call HTTP function to send device command to turn light " + luminary + " " + action + "...");
 
-            // var options = { 
-            //     method: 'POST',
-            //     url: 'https://lightingws.azurewebsites.net/api/HttpTriggerJS2',
-            //     headers: 
-            //      { 
-            //        'accept': 'text/plain',
-            //        'Content-Type': 'application/json' 
-            //      },  
-            //     body:  { 'method': 'invoke', 'deviceId': 'BeagleBone1', 'data': { 'route': 'dim', 'params': [ '2', '100', '1' ] } }
-            //     , 
-            //     json: true
-            // };
+            
+            var options = { 
+                method: 'POST',
+                url: 'https://lightingws.azurewebsites.net/api/HttpTriggerJS2',
+                headers: 
+                 { 
+                   'accept': 'text/plain',
+                   'Content-Type': 'application/json' 
+                 },  
+                body:  { 'method': 'invoke', 'deviceId': 'BeagleBone1', 'data': { 'route': 'dim', 'params': [ '2', '100', '1' ] } }
+                , 
+                json: true
+            };
 
-            // request(options, function (error, response, body) {
-            //     if (error) 
-            //       session.send(error);
+            request(options, function (error, response, body) {
+                if (error) 
+                  session.send(error);
 
-            //     session.send(body);
-            // });
-
+                session.send(body);
+            });
+            
         }
     }
 })
