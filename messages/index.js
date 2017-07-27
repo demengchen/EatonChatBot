@@ -9,6 +9,8 @@ var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
 const prettyjson = require('prettyjson');
+var request = require("request");
+
 const prettyjson_options = {
   noColor: true
 };
@@ -63,7 +65,28 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             session.send("luminary: %s", luminary);
             session.send("action: %s", action);
 
-            session.send("Hello world.");
+
+            session.send("Call HTTP function to send device command to turn light " + luminary + " " + action);
+            var options = { 
+                method: 'POST',
+                url: 'https://lightingws.azurewebsites.net/api/HttpTriggerJS2',
+                headers: 
+                 { 
+                   'accept': 'text/plain',
+                   'Content-Type': 'application/json' 
+                 },  
+                body:  { 'method': 'invoke', 'deviceId': 'BeagleBone1', 'data': { 'route': 'dim', 'params': [ '2', '100', '1' ] } }
+                , 
+                json: true
+              };
+
+              request(options, function (error, response, body) {
+                if (error) 
+                  session.send(error);
+
+                session.send(body);
+              });
+
         }
     }
 })
