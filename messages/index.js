@@ -67,25 +67,25 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 
             session.send("Call HTTP function to send device command to turn light " + luminary + " " + action);
 
-            var options = { 
-                method: 'POST',
-                url: 'https://lightingws.azurewebsites.net/api/HttpTriggerJS2',
-                headers: 
-                 { 
-                   'accept': 'text/plain',
-                   'Content-Type': 'application/json' 
-                 },  
-                body:  { 'method': 'invoke', 'deviceId': 'BeagleBone1', 'data': { 'route': 'dim', 'params': [ '2', '100', '1' ] } }
-                , 
-                json: true
-            };
+            // var options = { 
+            //     method: 'POST',
+            //     url: 'https://lightingws.azurewebsites.net/api/HttpTriggerJS2',
+            //     headers: 
+            //      { 
+            //        'accept': 'text/plain',
+            //        'Content-Type': 'application/json' 
+            //      },  
+            //     body:  { 'method': 'invoke', 'deviceId': 'BeagleBone1', 'data': { 'route': 'dim', 'params': [ '2', '100', '1' ] } }
+            //     , 
+            //     json: true
+            // };
 
-            request(options, function (error, response, body) {
-                if (error) 
-                  session.send(error);
+            // request(options, function (error, response, body) {
+            //     if (error) 
+            //       session.send(error);
 
-                session.send(body);
-            });
+            //     session.send(body);
+            // });
 
         }
     }
