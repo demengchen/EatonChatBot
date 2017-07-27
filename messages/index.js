@@ -65,7 +65,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             session.send("luminary: %s", luminary);
             session.send("action: %s", action);
 
-            session.send("Call HTTP function to send device command to turn light " + luminary + " " + action + "...");
+            session.send("Call  function to send device command to turn light " + luminary + " " + action + "...");
 
             
             var options = { 
