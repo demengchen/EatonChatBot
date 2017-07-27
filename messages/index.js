@@ -51,12 +51,12 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 
         // get entity of luminary type
         if (args.entities && args.entities.length > 0) {
-            session.send(JSON.stringify(args.entities));
+            //session.send(JSON.stringify(args.entities));
             var luminary = '';
             var action = '';
             for (var i = 0; i < args.entities.length; i++) {
                 var en = args.entities[i];
-                session.send(JSON.stringify(en));
+                //session.send(JSON.stringify(en));
                 if (en.type === 'luminary')
                     luminary = en.entity;
                 else if (en.type === 'action')
